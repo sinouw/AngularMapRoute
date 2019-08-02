@@ -48,7 +48,8 @@ export class RmapComponent implements OnInit, OnChanges {
     private map: any;
     private router: any;
     public choice: any = "pedestrian";
-
+    unit : string = "Metre"
+    tunit : string 
     public constructor(private service : ServiceService,private toastr: ToastrService) { }
   //the ngOnInit lifecycle hook
     public ngOnInit() {
@@ -137,11 +138,35 @@ export class RmapComponent implements OnInit, OnChanges {
               data.response.route[0].leg[0].maneuver.forEach(element => {
                   this.distance+= parseInt(element.length)
               });
+              if (this.distance>1000) {
+                  this.distance/=1000
+                  this.distance=Math.round((this.distance)*100)/100
+                  this.unit = "Km"
+              }
+              else{
+                  this.unit="Metre"
+              }
+
               //Duration
               this.duration=0
               data.response.route[0].leg[0].maneuver.forEach(element => {
-                this.duration+= Math.round((parseInt(element.travelTime)/60))
+                this.duration+=parseInt(element.travelTime)
               });
+
+              if (this.duration<60) {
+                this.tunit = "Sec"
+                console.log(this.tunit)
+            }
+            else if (this.duration>60 && this.duration<3600){
+                this.duration=Math.round(this.duration/60)
+                this.tunit="Min"
+                console.log(this.tunit)
+            }else{
+                this.duration=Math.round((this.duration/3600)*100)/100
+                this.tunit="Hour"
+                console.log(this.tunit)
+
+            }
             
               data = data.response.route[0];
 
@@ -162,6 +187,7 @@ export class RmapComponent implements OnInit, OnChanges {
                   lng: this.finish.split(",")[1]
               });
                this.map.addObjects([routeLine, startMarker, finishMarker]);
+            //    this.map.addObjects([startMarker]);
               this.map.setViewBounds(routeLine.getBounds());
           }
       }, error => {
@@ -170,19 +196,24 @@ export class RmapComponent implements OnInit, OnChanges {
   }
   
   modeType(mode){
-    if (mode == "Walk")     
-    this.choice="pedestrian"
-    else if(mode == "Car")
-    this.choice="car"
-    else
-    this.choice="bicycle"
+    if (mode == "Walk"){
+        this.choice="pedestrian";
+        this.toastr.success('Walk Mode Successfully Setted!', 'Setting Mode',{ timeOut: 1500 });
+    }     
+    else if(mode == "Car"){
+        this.choice="car"
+        this.toastr.success('Car Mode Successfully Setted!', 'Setting Mode',{ timeOut: 1500 });
+    }
+    else{
+        this.choice="bicycle"
+        this.toastr.success('Bicycle Mode Successfully Setted!', 'Setting Mode',{ timeOut: 1500 });
+    }
     this.route(this.start, this.finish);
   }
 
   userGeolocation(){
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            console.log(position.coords);
             this.start=position.coords.latitude+","+position.coords.longitude
             this.route(this.start, this.finish);
 
