@@ -53,7 +53,7 @@ export class RmapComponent implements OnInit, OnChanges {
   //the ngOnInit lifecycle hook
     public ngOnInit() {
 
-    
+        this.userGeolocation()
       //we initialize our platform with the app id and app code for our project
         this.platform = new H.service.Platform({
             // "app_id": this.appId,
@@ -76,13 +76,14 @@ export class RmapComponent implements OnInit, OnChanges {
             this.mapElement.nativeElement,
             defaultLayers.normal.map,
             {
-                zoom: 3,
-                center:  {lat : this.start.split(",")[0], lng :this.start.split(",")[1]}
+                zoom: 7,
                 // center: { lat: 36.847835499999995, lng: 10.267448199999999 }
+                center: new H.geo.Point(  34.247835499999995, 10.267448199999999 )
+
             }
         );
         //call the route method
-        this.route(this.start, this.finish);
+        // this.route(this.start, this.finish);
         //map Events 
         let behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.map));
         
@@ -96,7 +97,7 @@ export class RmapComponent implements OnInit, OnChanges {
             this.start=coord.lat+","+coord.lng
         
              this.sendData.emit(this.start)
-            console.log(this.start)
+
             this.setPosition()
             this.toastr.success('Location Successfully Setted!', 'Setting Position',{ timeOut: 1500 });
         }
@@ -173,9 +174,22 @@ export class RmapComponent implements OnInit, OnChanges {
     this.choice="car"
     else
     this.choice="bicycle"
-
-
     this.route(this.start, this.finish);
+  }
+
+  userGeolocation(){
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            console.log(position.coords);
+            this.start=position.coords.latitude+","+position.coords.longitude
+            this.route(this.start, this.finish);
+
+        });
+    } else {
+        this.start = "36.8481502,10.2695116";
+        this.route(this.start, this.finish);
+        console.error("Geolocation is not supported by this browser!");
+    }
   }
 
 }
