@@ -1,6 +1,25 @@
-<div #map [style.width]="width" [style.height]="height" style="float: left"></div>
-<ol style="float: left; background-color: #FFF; width: 35%; min-height: 530px; margin-left: 20px; margin-top: 0;" class="card">
-    <li *ngFor="let direction of directions">
-        <p [innerHTML]="direction.instruction"></p>
-    </li>
-</ol>
+<div class="container-fluid">
+    <div class="row" style="padding: 10px 20px">
+        Distance : {{distance}} metre | Duration : {{duration}} Min
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-outline-secondary" (click)="modeType('Walk')" [ngClass]="{clicked: choice=='pedestrian'}">Walk <i class="fas fa-walking"></i></button>
+            <button class="btn btn-outline-secondary" (click)="modeType('Bicycle')" [ngClass]="{clicked: choice=='bicycle'}">Bicycle <i class="fas fa-bicycle"></i></button>
+            <button class="btn btn-outline-secondary" (click)="modeType('Car')" [ngClass]="{clicked: choice=='car'}">Car <i class="fas fa-car-side"></i></button>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-outline-secondary" (click)="setPosition()" [ngClass]="{clicked: choosing}">Set Your Location <i class="fas fa-map-marker-alt"></i></button>
+        </div>
+    </div>
+
+    <div class="row" class="map">
+        <div #map [style.width]="width" [style.height]="height" style="float: left"></div>
+        <ol style="float: left; background-color: #FFF; width: 35%; min-height: 530px; margin-left: 20px; margin-top: 0;" class="card">
+            <li *ngFor="let direction of directions">
+                <p [innerHTML]="direction.instruction"></p>
+            </li>
+        </ol>
+    </div>
+</div>

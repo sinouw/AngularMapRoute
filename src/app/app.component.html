@@ -1,11 +1,61 @@
-<div style="padding: 10px 0">
-    <div>
-        <label style="display: inline-block; width: 60px; color: #FFF">Start</label>
-        <input type="text" [(ngModel)]="start" />
+<!-- --------------------------------------------------- -->
+<!-- -------------------  Route  ---------------------- -->
+<!-- --------------------------------------------------- -->
+
+
+<div class="container-fluid card " [ngStyle]="{'margin': '10px auto'}">
+    <div class="jumbtron card-header">
+        <h1 class="display-4 text-center">Club's Map</h1>
     </div>
-    <div>
-        <label style="display: inline-block; width: 60px; color: #FFF">Finish</label>
-        <input type="text" [(ngModel)]="finish" />
+    <!-- <hr> -->
+    <div class="row">
+        <div style="padding: 10px 30px">
+            <div hidden>
+                Start
+                <input type="text" [(ngModel)]="start" />
+            </div>
+            <table [ngStyle]="{'margin-top': '10px'}">
+                <tr>
+                    <td>
+                        My Position </td>
+                    <td>
+                        <input type="text" [(ngModel)]="query" list="cities" autocomplete=off>
+                        <datalist id="cities">
+                                        <option>Ariana</option>
+                                        <option>Manouba</option>
+                                        <option>La marsa</option>
+                                        <option>Soukra</option>
+                                        <option>Taieb Mhiri</option>
+                                        <option>Ain zaghouan</option>
+                                        <option>Beb Alioua</option>
+                                        <option>Beb Souika</option>
+                                        <option>Fouchana</option>
+                                        <option>El Mourouj</option>
+                                        <option>Rades</option>
+                                        <option>El Zahra</option>
+                                        </datalist>
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td>
+                        Destination
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="finish" />
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <button type="button" class="btn btn-outline-secondary" (click)="getAddress()">Search Your City <i class="fas fa-search-location"></i></button>
+                </tr>
+            </table>
+            <div hidden>
+                <input type="text" [(ngModel)]="position">
+                <button type="button" (click)="getAddressFromLatLng()">Search</button>
+            </div>
+        </div>
     </div>
+
+    <rmap (sendData)="consumeStart($event)" appId="cds80cGlDkOWep5ZOsIR" appCode="2UPvM6oqL1c0HNVYMJ0QMQ" [start]="start" [finish]="finish" width="60%" height="700px"></rmap>
 </div>
-<rmap appId="cds80cGlDkOWep5ZOsIR" appCode="2UPvM6oqL1c0HNVYMJ0QMQ" [start]="start" [finish]="finish" width="60%" height="530px"></rmap>
