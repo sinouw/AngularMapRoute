@@ -133,10 +133,12 @@ export class RmapComponent implements OnInit, OnChanges {
           if(data.response) {
               this.directions = data.response.route[0].leg[0].maneuver;
               //Distance
+              this.distance=0
               data.response.route[0].leg[0].maneuver.forEach(element => {
                   this.distance+= parseInt(element.length)
               });
               //Duration
+              this.duration=0
               data.response.route[0].leg[0].maneuver.forEach(element => {
                 this.duration+= Math.round((parseInt(element.travelTime)/60))
               });

@@ -17,7 +17,9 @@
             <table [ngStyle]="{'margin-top': '10px'}">
                 <tr>
                     <td>
-                        My Position </td>
+                        My Position
+                    </td>
+
                     <td>
                         <input type="text" [(ngModel)]="query" list="cities" autocomplete=off>
                         <datalist id="cities">
@@ -35,6 +37,9 @@
                                         <option>El Zahra</option>
                                         </datalist>
                     </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary" (click)="getAddress()">Search Your City <i class="fas fa-search-location"></i></button>
+                    </td>
                 </tr>
                 <br>
                 <tr>
@@ -46,9 +51,9 @@
                     </td>
                 </tr>
                 <br>
-                <tr>
-                    <button type="button" class="btn btn-outline-secondary" (click)="getAddress()">Search Your City <i class="fas fa-search-location"></i></button>
-                </tr>
+
+
+
             </table>
             <div hidden>
                 <input type="text" [(ngModel)]="position">
