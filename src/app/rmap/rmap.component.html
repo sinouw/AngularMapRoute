@@ -4,13 +4,14 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <button class="btn btn-outline-secondary" (click)="modeType('Walk')" [ngClass]="{clicked: choice=='pedestrian'}">Walk <i class="fas fa-walking"></i></button>
             <button class="btn btn-outline-secondary" (click)="modeType('Bicycle')" [ngClass]="{clicked: choice=='bicycle'}">Bicycle <i class="fas fa-bicycle"></i></button>
             <button class="btn btn-outline-secondary" (click)="modeType('Car')" [ngClass]="{clicked: choice=='car'}">Car <i class="fas fa-car-side"></i></button>
         </div>
-        <div class="col-sm-6">
-            <button class="btn btn-outline-secondary" (click)="setPosition()" [ngClass]="{clicked: choosing}">Set Your Location <i class="fas fa-map-marker-alt"></i></button>
+        <div class="col-sm-7">
+            <button class="btn btn-outline-secondary" (click)="setPosition()" [ngClass]="{clicked: choosing}">Set Position <i class="fas fa-map-marker-alt"></i></button> &nbsp;
+            <button class="btn btn-outline-secondary" (click)="userGeolocation()" [ngClass]="{clicked: choosing}">Auto Geolocation <i class="fas fa-map-marker-alt"></i></button>
         </div>
     </div>
 
